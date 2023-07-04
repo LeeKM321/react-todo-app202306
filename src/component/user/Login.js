@@ -9,21 +9,27 @@ import CustomSnackBar from '../layout/CustomSnackBar';
 
 const Login = () => {
 
+    console.log('Login Component Rendering!');
+
     const redirection = useNavigate();
 
+    console.log('bring onLogin in AuthContext!');
     // AuthContext에서 onLogin 함수를 가져옵니다.
     const { onLogin, isLoggedIn } = useContext(AuthContext);
+    console.log('isLoggedIn: ', isLoggedIn);
 
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        if (isLoggedIn) {
+        console.log('Login useEffect Called!');
+        if (localStorage.getItem('ACCESS_TOKEN')) {
+            console.log('isLoggedIn True!');
             setOpen(true);
             setTimeout(() => {
                 redirection('/');
             }, 3000);
         }
-    }, [isLoggedIn, redirection]);
+    }, []);
 
     const REQUEST_URL = BASE + USER + '/signin';
 
@@ -47,6 +53,7 @@ const Login = () => {
                 password: $password.value
              })
         });
+        console.log('login fetch complete!');
 
         if (res.status === 400) {
             const text = await res.text();
@@ -58,6 +65,7 @@ const Login = () => {
         // console.log(json);
       
 
+        console.log('setting login data in Context!');
         // Context API를 사용하여 로그인 상태를 업데이트합니다.
         onLogin(token, userName, role);
         

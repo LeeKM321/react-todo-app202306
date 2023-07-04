@@ -14,6 +14,8 @@ import AuthContext from '../../util/AuthContext';
 
 const TodoTemplate = () => {
 
+  console.log('Template Component Called!');
+
   // 로딩 상태값 관리
   const [loading, setLoading] = useState(true);
   // 로그인 인증 토큰 얻어오기
@@ -21,6 +23,7 @@ const TodoTemplate = () => {
 
   const redirection = useNavigate();
 
+  console.log('useContext called in Template Component!');
   const { setUserInfo } = useContext(AuthContext);
 
 
@@ -161,6 +164,8 @@ const TodoTemplate = () => {
 
   useEffect(() => {
     
+    console.log('Template useEffect Called!');
+
     //페이지가 렌더링 됨과 동시에 할 일 목록을 요청해서 뿌려 주겠습니다.
     fetch(API_BASE_URL, {
       method : 'GET',
@@ -180,9 +185,11 @@ const TodoTemplate = () => {
       .then(json => {
         // console.log(json.todos);
 
+        console.log('setTodos Call!');
         //fetch를 통해 받아온 데이터를 상태 변수에 할당.
         if(json) setTodos(json.todos);
 
+        console.log('setLoading Call!');
         //로딩 완료 처리
         setLoading(false);
       });
